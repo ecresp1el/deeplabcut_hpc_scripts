@@ -38,39 +38,36 @@ mkdir -p "${dlc_project_path}"
 cd "${dlc_project_path}"
 
 ########################
-# MODULES + CONDA SETUP
+# MODULES + VENV SETUP
 ########################
 echo "===== [$(date)] Loading Anaconda module ====="
 module purge
 module load python3.11-anaconda/2024.02
-
-echo "===== [$(date)] Initializing conda shell ====="
-set +u
-source "$(conda info --base)/etc/profile.d/conda.sh"
-set -u
+echo "✅ Loaded Anaconda module"
+echo "===== [$(date)] Loading PyTorch module ====="
+module load pytorch/2.0.1
+echo "✅ Loaded PyTorch module"
+echo "===== [$(date)] Currently loaded modules ====="
+module list
 
 ########################
-# CREATE FRESH ENV
+# CREATE PYTHON VENV
 ########################
-echo "===== [$(date)] Removing any previous env named ${ENV_NAME} (if present) ====="
-conda env remove -n "${ENV_NAME}" -y || true
+echo "===== [$(date)] Creating Python venv at ${dlc_project_path}/dlc-venv ====="
+python -m venv dlc-venv
+echo "✅ Created Python venv"
 
-echo "===== [$(date)] Creating fresh conda env ${ENV_NAME} (Python ${PYTHON_VERSION}) ====="
-conda create -y -n "${ENV_NAME}" python=${PYTHON_VERSION}
+echo "===== [$(date)] Activating Python venv ====="
+source dlc-venv/bin/activate
+echo "✅ Activated Python venv"
 
-echo "===== [$(date)] Activating env ${ENV_NAME} ====="
-conda activate "${ENV_NAME}"
-
-echo "===== [$(date)] Installing PyTorch (CUDA ${TORCH_CUDA}) via conda ====="
-# PyTorch + CUDA runtime; torchvision pulled in for good measure
-conda install -y -c pytorch pytorch torchvision pytorch-cuda=${TORCH_CUDA} -c nvidia
-
-echo "===== [$(date)] Installing PyTables (HDF5) via conda-forge ====="
-conda install -y -c conda-forge pytables==3.8.0
+echo "===== [$(date)] Upgrading pip ====="
+pip install --upgrade pip
+echo "✅ Upgraded pip"
 
 echo "===== [$(date)] Installing DeepLabCut (pip, headless) ====="
-pip install --upgrade pip
 pip install --pre "deeplabcut"
+echo "✅ DLC installed"
 
 echo "===== [$(date)] Python & package versions ====="
 python -V
