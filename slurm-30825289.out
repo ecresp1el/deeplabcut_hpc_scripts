@@ -1,0 +1,8 @@
+===== [Wed Aug 20 14:02:57 EDT 2025] Starting DeepLabCut GPU test on Great Lakes =====
+Shared Turbo root : /nfs/turbo/umms-parent
+Run project folder: /nfs/turbo/umms-parent/DeepLabCut_project-20250820-140257
+NOTE: Only creating/using the subfolder above; nothing else in /nfs/turbo/umms-parent will be modified.
+===== [Wed Aug 20 14:02:57 EDT 2025] Creating project directory on Turbo =====
+===== [Wed Aug 20 14:02:57 EDT 2025] Loading Anaconda module =====
+===== [Wed Aug 20 14:02:58 EDT 2025] Initializing conda shell =====
+/etc/bashrc: line 12: BASHRCSOURCED: unbound variable

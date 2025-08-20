@@ -44,10 +44,10 @@ echo "===== [$(date)] Loading Anaconda module ====="
 module purge
 module load python3.11-anaconda/2024.02
 
-# Ensure 'conda activate' is available in batch context
-# (run `conda init bash` once in a login shell if you’ve never used conda here)
 echo "===== [$(date)] Initializing conda shell ====="
-source ~/.bashrc || true
+set +u
+source "$(conda info --base)/etc/profile.d/conda.sh"
+set -u
 
 ########################
 # CREATE FRESH ENV
